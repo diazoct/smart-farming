@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:firebase_database/firebase_database.dart' show FirebaseDatabase;
 import 'package:flutter/material.dart';
 import 'package:flutter_pagination/flutter_pagination.dart';
@@ -208,7 +210,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   height: double.infinity,
                   padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 20.0),
                   decoration: const BoxDecoration(
-                    color: Colors.white,
+                    color: Color(0xFFFCFDF7),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(40.0),
                       topRight: Radius.circular(40.0),

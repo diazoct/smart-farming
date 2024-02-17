@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => TimerModel(),
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Smart Farming',
         debugShowCheckedModeBanner: false,
         theme: lightMode,
         home: const WelcomeScreen(),

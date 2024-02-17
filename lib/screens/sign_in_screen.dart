@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:test_aja/screens/forgot_password_screen.dart';
 import 'package:test_aja/screens/home_screen.dart';
 import 'package:test_aja/firebase/firebase_auth_services.dart';
 import 'package:test_aja/screens/sign_up_screen.dart';
@@ -155,6 +158,14 @@ class _SignInScreenState extends State<SignInScreen> {
                             ],
                           ),
                           GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (e) => const ForgotPassword(),
+                                ),
+                              );
+                            },
                             child: const Text(
                               'Forget Password?',
                               style: TextStyle(
@@ -282,7 +293,9 @@ class _SignInScreenState extends State<SignInScreen> {
     });
 
     if (user != null) {
-      showToast(message: "User is successfully signed in");
+      showToast(
+          message: "Successfully signed in",
+          backgroundColor: const Color(0xFF64C6CF));
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -290,7 +303,9 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       );
     } else {
-      showToast(message: "some error occured");
+      showToast(
+          message: "Some error occured",
+          backgroundColor: const Color(0xFFB7857E));
     }
   }
 }

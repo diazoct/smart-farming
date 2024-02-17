@@ -278,6 +278,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       isSigningUp = true;
     });
 
+    // ignore: unused_local_variable
     String name = _nameController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
@@ -288,7 +289,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       isSigningUp = false;
     });
     if (user != null) {
-      showToast(message: "User is successfully created");
+      showToast(
+          message: "User is successfully created",
+          backgroundColor: const Color(0xFF64C6CF));
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -296,7 +299,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       );
     } else {
-      showToast(message: "Some error happend");
+      showToast(
+          message: "Some error happend",
+          backgroundColor: const Color(0xFFB7857E));
     }
   }
 }

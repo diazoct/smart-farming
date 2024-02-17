@@ -23,6 +23,9 @@ class _TimerModeState extends State<TimerMode> {
       FirebaseDatabase.instance.reference();
 
   String _formatDuration(int seconds) {
+    if (seconds < 0) {
+      return 'Timer belum diatur'; // Default value when countdown is not set
+    }
     int minutes = (seconds / 60).floor();
     int remainingSeconds = seconds % 60;
     return '$minutes min : $remainingSeconds sec';

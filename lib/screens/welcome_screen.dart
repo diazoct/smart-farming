@@ -26,7 +26,7 @@ class WelcomeScreen extends StatelessWidget {
                   text: const TextSpan(
                     children: [
                       TextSpan(
-                        text: 'Smart Plant\n',
+                        text: 'Smart Farming\n',
                         style: TextStyle(
                           fontSize: 45.0,
                           fontWeight: FontWeight.w600,

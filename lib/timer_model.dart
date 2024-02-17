@@ -1,28 +1,49 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 
 class TimerModel extends ChangeNotifier {
   bool _timerEnabled = false;
-  int _countdownTime = 0;
+  int _countdownTime = -1; // Default value set to -1
+
   Timer? _timer;
 
   bool get timerEnabled => _timerEnabled;
   int get countdownTime => _countdownTime;
 
+  TimerModel() {
+    // Mendengarkan perubahan pada nilai 'Kelembapan'
+    FirebaseDatabase.instance
+        .reference()
+        .child('SoilMoisture')
+        .onValue
+        .listen((event) {
+      final kelembapantanah = event.snapshot.value as int?;
+
+      // Mengubah nilai duration jika Kelembapan >= 50
+      if (kelembapantanah != null && kelembapantanah >= 50) {
+        setCountdownTime(-1);
+      }
+    });
+  }
+
   void toggleTimer() {
     _timerEnabled = !_timerEnabled;
-    if (_timerEnabled) {
-      startTimer();
-      updateFirebase();
-    } else {
+    if (!_timerEnabled) {
       resetTimer();
     }
+    updateFirebase();
     notifyListeners();
   }
 
   void setCountdownTime(int duration) {
     _countdownTime = duration;
+    if (_countdownTime > 0 && _timerEnabled) {
+      startTimer();
+    }
+    updateFirebase();
     notifyListeners();
   }
 
@@ -31,7 +52,7 @@ class TimerModel extends ChangeNotifier {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_countdownTime > 0) {
         _countdownTime--;
-        updateFirebase(); // Perbarui nilai countdown pada Firebase
+        updateFirebase();
         notifyListeners();
       } else {
         _timer?.cancel();
@@ -40,9 +61,9 @@ class TimerModel extends ChangeNotifier {
   }
 
   void resetTimer() {
-    _countdownTime = 0;
+    _countdownTime = -1; // Reset to -1 when the timer is not enabled
     _timer?.cancel();
-    updateFirebase(); // Reset nilai countdown pada Firebase
+    updateFirebase();
     notifyListeners();
   }
 
@@ -51,10 +72,9 @@ class TimerModel extends ChangeNotifier {
   }
 
   void updateFirebase() {
-    // ignore: deprecated_member_use
     FirebaseDatabase.instance.reference().child('timer').update({
       'timerMode': _timerEnabled,
-      'duration': _timerEnabled ? _countdownTime : 0,
+      'duration': _timerEnabled ? _countdownTime : -1,
     });
   }
 }

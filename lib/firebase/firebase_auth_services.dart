@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:flutter/services.dart';
 import 'package:test_aja/widgets/toast_message.dart';
 
 class FirebaseAuthService {
@@ -13,9 +13,13 @@ class FirebaseAuthService {
       return credential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
-        showToast(message: 'The email address is already in use.');
+        showToast(
+            message: 'Email address is already use.',
+            backgroundColor: const Color(0xFFB28781));
       } else {
-        showToast(message: 'An error occurred: ${e.code}');
+        showToast(
+            message: 'An error occurred: ${e.code}',
+            backgroundColor: const Color(0xFFB28781));
       }
     }
     return null;
@@ -29,9 +33,13 @@ class FirebaseAuthService {
       return credential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
-        showToast(message: 'Invalid email or password.');
+        showToast(
+            message: 'Invalid email or password.',
+            backgroundColor: const Color(0xFFB7857E));
       } else {
-        showToast(message: 'An error occurred: ${e.code}');
+        showToast(
+            message: 'An error occurred: ${e.code}',
+            backgroundColor: const Color(0xFFB7857E));
       }
     }
     return null;
